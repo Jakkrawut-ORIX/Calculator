@@ -51,52 +51,67 @@
       border: 1px solid var(--color-border);
       box-sizing: border-box;
     }
-
-    /* ---- New Header Styles ---- */
+    
     .header-content {
       display: flex;
-      align-items: center;
+      align-items: center; /* Changed to center for vertical alignment */
       justify-content: space-between;
-      margin-bottom: 15px;
+      margin-bottom: 5px; 
       padding-bottom: 5px;
-      border-bottom: 2px solid var(--color-primary); /* Blue underline effect */
+      border-bottom: 2px solid var(--color-primary);
     }
 
     .logo-container img {
-      max-width: 120px; /* Adjusted logo size for a cleaner look */
+      max-width: 90px;
       height: auto;
     }
 
-    .header-text {
-      color: var(--color-primary);
-      font-size: 1.4em;
-      font-weight: 600;
-      margin: 0;
-      text-align: right;
+    .company-info {
+        text-align: right;
+        color: var(--color-text-primary);
+        line-height: 1.2;
     }
-    /* -------------------------- */
     
+    .company-name {
+        font-size: 0.9em; 
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+    
+    .company-address {
+        font-size: 0.7em;
+        line-height: 1.2;
+    }
+    
+    .header-title {
+        color: var(--color-primary);
+        font-size: 1.2em; 
+        font-weight: 600;
+        text-align: center;
+        margin: 0 0 15px 0; 
+    }
+
     .input-section {
       background: var(--color-background);
       border-radius: 7px;
       padding: 8px;
-      margin-bottom: 10px; /* Reduced margin */
+      margin-bottom: 10px;
       box-shadow: var(--shadow-elevation-1);
     }
 
     h2 {
-      color: var(--orix-logo-red); /* Changed heading color to red */
-      font-size: 1em; /* Adjusted font size to be a bit larger */
-      font-weight: 600; /* Made it bolder */
+      color: var(--orix-logo-red);
+      font-size: 1em;
+      font-weight: 600;
       margin-top: 0;
-      margin-bottom: 5px; /* Reduced margin */
+      margin-bottom: 5px;
     }
 
     .form-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 4px 0; /* Reduced padding */
+      padding: 4px 0;
       border-bottom: 1px dashed var(--color-border);
     }
 
@@ -164,8 +179,8 @@
     .button-group {
       display: flex;
       flex-direction: column;
-      gap: 6px; /* Reduced gap */
-      margin-top: 12px; /* Reduced margin */
+      gap: 6px;
+      margin-top: 12px;
     }
 
     .button-group button {
@@ -183,12 +198,12 @@
 
     .button-group button:hover {
       box-shadow: var(--shadow-elevation-2);
-      transform: translateY(-1px); /* Slightly reduced hover effect */
+      transform: translateY(-1px);
     }
 
     .button-group button:active {
       transform: translateY(0);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Adjusted active shadow */
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     #calculateBtn {
@@ -205,7 +220,6 @@
       background: linear-gradient(145deg, var(--color-secondary), #B0050D);
     }
 
-    /* Mobile adjustments for smaller screens */
     @media screen and (max-width: 480px) {
       body {
         font-size: 0.75em;
@@ -216,11 +230,17 @@
       .header-content {
         margin-bottom: 10px;
       }
-      .header-text {
-        font-size: 1.2em;
+      .company-name {
+        font-size: 0.8em;
+      }
+      .company-address {
+        font-size: 0.6em;
+      }
+      .header-title {
+        font-size: 1.1em;
       }
       h2 {
-        font-size: 1em; /* Maintain larger size on mobile */
+        font-size: 1em;
         margin-bottom: 5px;
       }
       input:not([readonly]), select, input[readonly] {
@@ -241,8 +261,12 @@
     <div class="logo-container">
       <img src="orix_logo.png" alt="ORIX Logo">
     </div>
-    <div class="header-text">โปรแกรมคำนวนลีสซิ่งเบื้องต้น</div>
+    <div class="company-info">
+        <div class="company-name">บริษัท ไทยโอริกซ์ลีสซิ่ง จำกัด</div>
+        <div class="company-address">555 รสา วัน (อาคาร บี) ยูนิต 1801 ชั้น 18 และ ชั้น 19<br>ถนนพหลโยธิน แขวงจตุจักร เขตจตุจักร กรุงเทพฯ 10900<br>โทรศัพท์: 66(0) 2792-4500</div>
+    </div>
   </div>
+  <div class="header-title">โปรแกรมคำนวนลีสซิ่งเบื้องต้น</div>
 
   <div class="input-section">
     <h2>ข้อมูลเบื้องต้น</h2>
