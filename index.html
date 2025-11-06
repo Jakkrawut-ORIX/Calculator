@@ -1,274 +1,154 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>โปรแกรมคำนวนลีสซิ่งเบื้องต้น</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>โปรแกรมคำนวนลีสซิ่งเบื้องต้น</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --orix-blue: #003366;
-      --orix-red: #E30613;
-      --light-bg: linear-gradient(160deg, #003366, #004A99);
-      --light-surface: #FFFFFF;
-      --light-text: #1F2D3D;
-      --light-input-bg: #F9FAFB;
-      --light-input-border: #D1D5DB;
-      --dark-bg: linear-gradient(160deg, #001933, #002A4D);
-      --dark-surface: #0B2A52;
-      --dark-text: #E6ECF3;
-      --dark-input-bg: #163861;
-      --dark-input-border: #365E8C;
-      --transition: 0.4s ease;
-    }
-
-    body {
-      font-family: 'Kanit', sans-serif;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px;
-      transition: background var(--transition), color var(--transition);
-    }
-
-    body.light {
-      background: var(--light-bg);
-      color: #FFFFFF;
-    }
-
-    body.dark {
-      background: var(--dark-bg);
-      color: var(--dark-text);
-    }
-
-    .container {
-      width: 100%;
-      max-width: 480px;
-      border-radius: 14px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      transition: background var(--transition), color var(--transition);
-      overflow: hidden;
-    }
-
-    body.light .container {
-      background: var(--light-surface);
-      color: var(--light-text);
-    }
-
-    body.dark .container {
-      background: var(--dark-surface);
-      color: var(--dark-text);
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 3px solid var(--orix-blue);
-      padding: 10px 16px;
-    }
-
-    .logo-container img {
-      max-width: 60px;
-    }
-
-    .company-info {
-      text-align: right;
-      font-size: 0.75em;
-      line-height: 1.3;
-    }
-
-    .company-name {
-      font-weight: 600;
-      font-size: 0.9em;
-      color: var(--orix-blue);
-    }
-
-    .header-title {
-      text-align: center;
-      font-size: 1.3em;
-      font-weight: 600;
-      color: var(--orix-blue);
-      margin: 12px 0;
-    }
-
-    .theme-toggle {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-      font-size: 0.9em;
-      cursor: pointer;
-      user-select: none;
-      transition: color var(--transition);
-    }
-
-    .theme-toggle input {
-      width: 42px;
-      height: 22px;
-      appearance: none;
-      background: #ccc;
-      border-radius: 12px;
-      position: relative;
-      outline: none;
-      cursor: pointer;
-      transition: background var(--transition);
-    }
-
-    .theme-toggle input::before {
-      content: "";
-      width: 18px;
-      height: 18px;
-      background: white;
-      border-radius: 50%;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      transition: transform var(--transition);
-    }
-
-    .theme-toggle input:checked {
-      background: var(--orix-red);
-    }
-
-    .theme-toggle input:checked::before {
-      transform: translateX(20px);
-    }
-
-    .input-section {
-      border-radius: 10px;
-      padding: 10px;
-      margin: 10px 16px;
-      transition: background var(--transition), color var(--transition);
-    }
-
-    body.light .input-section {
-      background: #F1F4F8;
-    }
-
-    body.dark .input-section {
-      background: #163861;
-    }
-
-    h2 {
-      font-size: 1em;
-      font-weight: 600;
-      margin: 0 0 8px 0;
-      border-left: 4px solid var(--orix-red);
-      padding-left: 8px;
-    }
-
-    .form-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .label-col {
-      width: 45%;
-      font-weight: 500;
-    }
-
-    .value-col {
-      width: 55%;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: 1px solid;
-      font-family: 'Kanit', sans-serif;
-      font-size: 0.9em;
-      box-sizing: border-box;
-      transition: background var(--transition), color var(--transition), border var(--transition);
-    }
-
-    body.light input, body.light select {
-      background: var(--light-input-bg);
-      border-color: var(--light-input-border);
-      color: var(--light-text);
-    }
-
-    body.dark input, body.dark select {
-      background: var(--dark-input-bg);
-      border-color: var(--dark-input-border);
-      color: var(--dark-text);
-    }
-
-    input[readonly] {
-      background: #E9EDF3;
-      border: 1px dashed #B0C4DE;
-      font-weight: 600;
-      text-align: right;
-    }
-
-    input[type="text"], input[type="number"] {
-      text-align: right;
-    }
-
-    input#carInfo {
-      text-align: left;
-    }
-
-    #downPercentDisplay {
-      font-weight: 600;
-      color: #FFEB3B;
-    }
-
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin: 16px;
-    }
-
-    .button-group button {
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      font-family: 'Kanit', sans-serif;
-      font-weight: 500;
-      font-size: 0.9em;
-      color: #FFF;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-    }
-
-    #calculateBtn {
-      background: linear-gradient(135deg, #004A99, #003366);
-    }
-    #calculateBtn:hover {
-      background: linear-gradient(135deg, #003366, #00264D);
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-    }
-
-    #targetLeaseBtn {
-      background: linear-gradient(135deg, #E30613, #B0050D);
-    }
-    #targetLeaseBtn:hover {
-      background: linear-gradient(135deg, #C50C1B, #8B0000);
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-    }
-
-    @media (max-width: 480px) {
-      .header-content { flex-direction: column; align-items: flex-start; }
-      .company-info { text-align: left; }
-      .header-title { font-size: 1.1em; }
-      .form-row { flex-direction: column; align-items: flex-start; }
-      .label-col, .value-col { width: 100%; }
-      .button-group { flex-direction: column; }
-    }
-  </style>
+<style>
+:root {
+  --orix-blue: #003366;
+  --orix-red: #E30613;
+  --light-bg: linear-gradient(160deg, #003366, #004A99);
+  --light-surface: #FFFFFF;
+  --light-text: #1F2D3D;
+  --dark-bg: linear-gradient(160deg, #001933, #002A4D);
+  --dark-surface: #0B2A52;
+  --dark-text: #E6ECF3;
+  --transition: 0.4s ease;
+}
+body {
+  font-family: 'Kanit', sans-serif;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background: var(--light-bg);
+  color: var(--light-text);
+  transition: background var(--transition), color var(--transition);
+}
+body.dark {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+.container {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  background: var(--light-surface);
+  transition: background var(--transition), color var(--transition);
+}
+body.dark .container {
+  background: var(--dark-surface);
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid var(--orix-blue);
+  padding: 10px 16px;
+}
+.logo-container img {
+  max-width: 60px;
+}
+.company-info {
+  text-align: right;
+  font-size: 0.75em;
+}
+.company-name {
+  font-weight: 600;
+  color: var(--orix-blue);
+}
+.header-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.2em;
+  color: var(--orix-blue);
+  margin: 10px 0;
+}
+.theme-toggle {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 1.3em;
+  transition: transform 0.3s ease;
+}
+.theme-toggle:hover { transform: scale(1.1); }
+.input-section {
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 16px;
+  background: #F1F4F8;
+}
+body.dark .input-section { background: #163861; }
+h2 {
+  font-size: 1em;
+  margin-bottom: 8px;
+  border-left: 4px solid var(--orix-red);
+  padding-left: 8px;
+}
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.label-col { width: 45%; }
+.value-col { width: 55%; }
+input, select {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: 'Kanit';
+  font-size: 0.9em;
+  text-align: right;
+}
+input[readonly] {
+  background: #E9EDF3;
+  font-weight: 600;
+}
+.button-group {
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+button {
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-family: 'Kanit';
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#calculateBtn {
+  background: linear-gradient(135deg, #004A99, #003366);
+}
+#calculateBtn:hover {
+  background: linear-gradient(135deg, #003366, #00264D);
+}
+#targetLeaseBtn {
+  background: linear-gradient(135deg, #E30613, #B0050D);
+}
+#targetLeaseBtn:hover {
+  background: linear-gradient(135deg, #C50C1B, #8B0000);
+}
+@media (max-width: 480px) {
+  .form-row { flex-direction: column; align-items: flex-start; }
+  .label-col, .value-col { width: 100%; }
+}
+</style>
 </head>
 
 <body class="light">
+  <div class="theme-toggle" id="themeToggle">🌙</div>
+
   <div class="container">
     <div class="header-content">
       <div class="logo-container">
@@ -282,33 +162,121 @@
 
     <div class="header-title">โปรแกรมคำนวนลีสซิ่งเบื้องต้น</div>
 
-    <div class="theme-toggle">
-      🌞 <input type="checkbox" id="themeSwitch"> 🌙
+    <!-- 🔹 ฟอร์มคำนวณ -->
+    <div class="input-section">
+      <h2>ข้อมูลรถและราคา</h2>
+      <div class="form-row">
+        <div class="label-col">รุ่นรถ</div>
+        <div class="value-col"><input type="text" id="carInfo" placeholder="Toyota Yaris 1.2"></div>
+      </div>
+      <div class="form-row">
+        <div class="label-col">ราคารถ (บาท)</div>
+        <div class="value-col"><input type="number" id="carPrice" value="600000"></div>
+      </div>
+      <div class="form-row">
+        <div class="label-col">อัตราดอกเบี้ย (%) ต่อปี</div>
+        <div class="value-col"><input type="number" id="interestRate" value="5"></div>
+      </div>
     </div>
 
-    <!-- ✅ ส่วนคำนวณทั้งหมดจากโค้ดต้นฉบับของคุณ (ตัดสั้นไม่ได้เพราะยาวมาก) -->
-    <!-- ✅ ใส่ไว้ตรงนี้ (รวมแล้วในไฟล์เดียว) -->
-    <!-- ✅ โค้ดคำนวณทั้งหมดจะทำงานเหมือนเดิม -->
+    <div class="input-section">
+      <h2>เงินดาวน์และระยะเวลา</h2>
+      <div class="form-row">
+        <div class="label-col">เงินดาวน์ (%)</div>
+        <div class="value-col"><input type="number" id="downPercent" value="10"></div>
+      </div>
+      <div class="form-row">
+        <div class="label-col">ระยะเวลา (เดือน)</div>
+        <div class="value-col">
+          <select id="term">
+            <option value="36">36</option>
+            <option value="48" selected>48</option>
+            <option value="60">60</option>
+          </select>
+        </div>
+      </div>
+    </div>
 
-    <div id="app"></div>
+    <div class="input-section">
+      <h2>ผลการคำนวณ</h2>
+      <div class="form-row">
+        <div class="label-col">เงินดาวน์ (บาท)</div>
+        <div class="value-col"><input type="text" id="downPayment" readonly></div>
+      </div>
+      <div class="form-row">
+        <div class="label-col">ยอดจัด (บาท)</div>
+        <div class="value-col"><input type="text" id="financeAmount" readonly></div>
+      </div>
+      <div class="form-row">
+        <div class="label-col">ค่างวดต่อเดือน (บาท)</div>
+        <div class="value-col"><input type="text" id="monthlyPayment" readonly></div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button id="calculateBtn">คำนวณ</button>
+      <button id="targetLeaseBtn">ตั้งเป้าค่างวด 36,000</button>
+    </div>
   </div>
 
 <script>
-/* ใส่โค้ดคำนวณทั้งหมดของคุณที่ให้มาในตอนแรกได้ที่นี่โดยตรง */
-/* (ผมละไว้เพราะยาวมาก แต่สามารถวางต่อท้ายได้เลย) */
+/* ===== ฟังก์ชันคำนวณ ===== */
+function calculate() {
+  const price = parseFloat(document.getElementById('carPrice').value) || 0;
+  const rate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+  const term = parseInt(document.getElementById('term').value);
+  const downPercent = parseFloat(document.getElementById('downPercent').value) || 0;
+  const down = price * downPercent / 100;
+  const finance = price - down;
 
-/* สลับธีม Light/Dark */
-const themeSwitch = document.getElementById("themeSwitch");
-themeSwitch.addEventListener("change", () => {
-  document.body.classList.toggle("dark", themeSwitch.checked);
-  document.body.classList.toggle("light", !themeSwitch.checked);
-  localStorage.setItem("theme", themeSwitch.checked ? "dark" : "light");
+  const payment = rate === 0
+    ? finance / term
+    : (finance * rate) / (1 - Math.pow(1 + rate, -term));
+
+  document.getElementById('downPayment').value = down.toLocaleString(undefined,{maximumFractionDigits:2});
+  document.getElementById('financeAmount').value = finance.toLocaleString(undefined,{maximumFractionDigits:2});
+  document.getElementById('monthlyPayment').value = payment.toLocaleString(undefined,{maximumFractionDigits:2});
+}
+
+/* ตั้งเป้าค่างวด 36,000 */
+function targetLease() {
+  const target = 36000;
+  const price = parseFloat(document.getElementById('carPrice').value) || 0;
+  const rate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+  const term = parseInt(document.getElementById('term').value);
+
+  // หาเงินดาวน์โดยประมาณให้ค่างวดใกล้เคียง target
+  let downPercent = 0;
+  for (let i = 0; i <= 100; i += 0.1) {
+    const down = price * i / 100;
+    const finance = price - down;
+    const payment = rate === 0 ? finance/term : (finance * rate)/(1 - Math.pow(1 + rate, -term));
+    if (payment <= target) { downPercent = i; break; }
+  }
+  document.getElementById('downPercent').value = downPercent.toFixed(1);
+  calculate();
+}
+
+/* Event */
+document.getElementById('calculateBtn').addEventListener('click', calculate);
+document.getElementById('targetLeaseBtn').addEventListener('click', targetLease);
+window.addEventListener('load', calculate);
+
+/* ===== Theme Toggle ===== */
+const themeToggle = document.getElementById('themeToggle');
+function setTheme(mode) {
+  document.body.classList.toggle('dark', mode === 'dark');
+  document.body.classList.toggle('light', mode !== 'dark');
+  themeToggle.textContent = mode === 'dark' ? '🌞' : '🌙';
+  localStorage.setItem('theme', mode);
+}
+themeToggle.addEventListener('click', () => {
+  const current = document.body.classList.contains('dark') ? 'dark' : 'light';
+  setTheme(current === 'dark' ? 'light' : 'dark');
 });
-
-window.addEventListener("load", () => {
-  const savedTheme = localStorage.getItem("theme") || "light";
-  document.body.classList.add(savedTheme);
-  themeSwitch.checked = savedTheme === "dark";
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('theme') || 'light';
+  setTheme(saved);
 });
 </script>
 </body>
