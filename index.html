@@ -354,17 +354,25 @@ input[readonly] {
     h2 {
         font-size: 1.1em;
     }
+    /* ปรับปรุง: ให้ Label และ Input อยู่ในบรรทัดเดียวกันและลดขนาด */
     .form-row {
-        flex-direction: column;
-        align-items: flex-start;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
         gap: 8px;
+        padding: 10px 0; /* ลด padding */
     }
-    .label-col, .value-col {
-        width: 100%;
+    .label-col {
+        width: 45%;
+        font-size: 0.88em; /* ลดขนาดตัวอักษรของ Label */
+    }
+    .value-col {
+        width: 55%;
     }
     input:not([readonly]), select, input[readonly] {
-        padding: 9px 11px;
-        font-size: 0.9em;
+        padding: 8px 10px; /* ลด padding */
+        font-size: 0.88em; /* ลดขนาดตัวอักษรของ Input */
     }
     .button-group button {
         padding: 13px 16px;
@@ -392,9 +400,16 @@ input[readonly] {
     h2 {
         font-size: 1.05em;
     }
+    /* ลดขนาดลงอีกสำหรับจอที่เล็กมาก */
+    .form-row {
+        padding: 8px 0;
+    }
+    .label-col {
+        font-size: 0.85em; /* ลดขนาดตัวอักษรของ Label อีก */
+    }
     input:not([readonly]), select, input[readonly] {
-        padding: 8px 10px;
-        font-size: 0.85em;
+        padding: 7px 9px; /* ลด padding อีก */
+        font-size: 0.85em; /* ลดขนาดตัวอักษรของ Input อีก */
     }
     .button-group button {
         padding: 12px 15px;
@@ -427,7 +442,7 @@ input[readonly] {
 <div class="container">
     <div class="header-content">
         <div class="logo-container">
-            <img src="orix_logo.png" alt="ORIX Logo">
+            <img src="orix_logo.png" alt="ORIX Logo"> 
         </div>
         <div class="company-info">
             <div class="company-name">บริษัท ไทยโอริกซ์ลีสซิ่ง จำกัด</div>
@@ -803,11 +818,11 @@ function calculateDownForTargetLease(targetLease) {
     let high = total;
     let bestDown = 0;
     let minDiff = Infinity;
-    let finalLease = 0;
     const maxIter = 500;
     
     for (let i = 0; i < maxIter; i++) {
-        const currentDown = Math.ceil((low + high) / 2);
+        // ใช้ Math.floor แทน Math.ceil เพื่อให้การค้นหาแม่นยำขึ้นในเงื่อนไขการค้นหา
+        const currentDown = Math.floor((low + high) / 2);
         if (currentDown < 0) currentDown = 0;
         if (currentDown > total) currentDown = total;
         
@@ -815,7 +830,6 @@ function calculateDownForTargetLease(targetLease) {
         const intTotal = finance * (rate / 100) * years;
         const currentLease = months > 0 ? Math.ceil((finance + intTotal) / months) : 0;
         
-        finalLease = currentLease;
         const diff = Math.abs(currentLease - targetLease);
         
         if (diff < minDiff) {
@@ -823,7 +837,21 @@ function calculateDownForTargetLease(targetLease) {
             bestDown = currentDown;
         }
         
-        if (Math.abs(high - low) < 1 || diff < 0.1) {
+        // เงื่อนไขหยุดเมื่อค่า low และ high ใกล้กันมากพอ
+        if (high - low <= 1) {
+             // ตรวจสอบค่างวดสุดท้ายที่คำนวณด้วย bestDown ที่ดีที่สุด
+            const finalLeaseCheck = months > 0 ? Math.ceil((total - bestDown + (total - bestDown) * (rate / 100) * years) / months) : 0;
+            if (finalLeaseCheck < targetLease) {
+                 // ถ้าค่างวดไม่ถึงเป้าหมาย ให้ลองลดเงินดาวน์ลงอีก 1 เพื่อเช็คค่างวดที่เพิ่มขึ้น
+                 const nextLowerDown = Math.max(0, bestDown - 1);
+                 const financeLower = total - nextLowerDown;
+                 const intTotalLower = financeLower * (rate / 100) * years;
+                 const leaseLower = months > 0 ? Math.ceil((financeLower + intTotalLower) / months) : 0;
+                 
+                 if (leaseLower >= targetLease) {
+                    bestDown = nextLowerDown;
+                 }
+            }
             break;
         }
         
@@ -834,9 +862,16 @@ function calculateDownForTargetLease(targetLease) {
         }
     }
     
+    // ตรวจสอบครั้งสุดท้ายด้วย bestDown ที่หาได้
+    const finalLease = months > 0 ? Math.ceil((total - bestDown + (total - bestDown) * (rate / 100) * years) / months) : 0;
+
+    // *** ส่วนที่แก้ไขตามความต้องการของผู้ใช้ ***
     if (finalLease < targetLease) {
+        // ให้ alert และกำหนดเงินดาวน์เป็น 0
+        alert(`คำเตือน: ค่างวดที่คำนวณได้ (${format(finalLease)} บาท) ไม่ถึงค่างวดเป้าหมาย ${format(targetLease)} บาท ระบบได้กำหนดให้เงินดาวน์เป็น 0.`);
         bestDown = 0;
     }
+    // ***************************************
     
     document.getElementById('downType').value = 'amount';
     document.getElementById('downInput').value = formatNoDecimal(bestDown);
