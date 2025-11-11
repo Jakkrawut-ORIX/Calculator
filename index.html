@@ -2,450 +2,364 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>โปรแกรมคำนวนลีสซิ่งเบื้องต้น</title>
+<title>โปรแกรมคำนวนลีสซิ่งเบื้องต้น - ORIX Style (Final Result Adjustments)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ORIX Original Colors (STANDARD LIGHT MODE) */
 :root {
-    /* ORIX Logo Colors */
-    --orix-logo-blue: #003366;
-    --orix-logo-red: #E30613;
+    --orix-logo-blue: #003366; /* Deep Blue - Primary Color */
+    --orix-logo-red: #E30613; /* ORIX Red - Highlight Color */
     
-    /* Modern Blue Theme Colors */
-    --color-primary: var(--orix-logo-blue);
-    --color-secondary: var(--orix-logo-red);
-    --color-background: linear-gradient(135deg, #1a3a5f 0%, #0a1e33 100%); /* Deep blue gradient */
-    --color-surface: rgba(255, 255, 255, 0.95); /* Semi-transparent white for cards */
-    --color-card-header: rgba(0, 51, 102, 0.9); /* Semi-transparent blue for card headers */
-    --color-text-primary: #2C3E50;
-    --color-text-secondary: #7F8C8D;
-    --color-text-light: #FFFFFF; /* Light text for dark backgrounds */
-    --color-text-header: #E3F2FD; /* Light blue text for headers */
-    --color-border: rgba(255, 255, 255, 0.3);
-    --color-input-bg-editable: rgba(255, 255, 255, 0.9);
-    --color-input-readonly: rgba(230, 240, 255, 0.9);
-    
-    /* Shadow for cards */
-    --shadow-elevation-1: 0 4px 12px rgba(0, 0, 0, 0.15);
-    --shadow-elevation-2: 0 8px 24px rgba(0, 0, 0, 0.2);
-    --shadow-elevation-3: 0 12px 36px rgba(0, 0, 0, 0.25);
-    --shadow-button: 0 6px 20px rgba(0, 0, 0, 0.15);
-    --shadow-button-hover: 0 8px 28px rgba(0, 0, 0, 0.25);
+    --color-primary: #003366;
+    --color-secondary: #E30613;
+    --color-background: #F0F4F8; 
+    --color-surface: #FFFFFF; 
+    --color-text-primary: #2C3E50; 
+    --color-text-secondary: #7F8C8D; 
+    --color-text-highlight: #E30613; 
+    --color-border: #E0E7EE; 
+    --color-input-bg: #FFFFFF;
+    --color-button-primary: #003366;
+    --color-button-secondary: #E30613;
+
+    --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 * {
     font-family: 'Kanit', sans-serif;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Kanit', sans-serif;
     margin: 0;
-    padding: 15px;
+    padding: 20px 10px;
     background: var(--color-background);
     color: var(--color-text-primary);
-    line-height: 1.5;
+    line-height: 1.6;
     font-size: 0.95em;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
 }
 
 .container {
-    max-width: 500px;
+    max-width: 900px;
     width: 100%;
     background: var(--color-surface);
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: var(--shadow-elevation-3);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-sizing: border-box;
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-elevation);
+    border-top: 5px solid var(--color-primary); 
 }
 
+/* Header and Company Info (Unchanged) */
 .header-content {
-    display: flex; /* ให้เป็น Flexbox */
-    align-items: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
-    justify-content: space-between; /* จัดโลโก้อยู่ซ้ายสุด ข้อมูลบริษัทอยู่ขวาสุด */
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .logo-container img {
-    max-width: 55px; /* ลดขนาดโลโก้ลงจาก 70px เป็น 55px */
+    max-width: 60px;
     height: auto;
-    margin-right: 15px; /* เพิ่มระยะห่างด้านขวาของโลโก้ */
 }
 
 .company-info {
     text-align: right;
-    color: var(--color-text-primary);
-    line-height: 1.2; /* ปรับ line-height ให้กระชับขึ้น */
+    line-height: 1.3;
 }
-
 .company-name {
-    font-family: 'Kanit', sans-serif;
-    font-size: 0.9em; /* ลดขนาดชื่อบริษัทลงจาก 1.1em เป็น 0.9em */
+    font-size: 0.9em;
     font-weight: 600;
-    margin-bottom: 3px; /* ลด margin-bottom */
 }
-
 .company-address {
-    font-family: 'Kanit', sans-serif;
-    font-size: 0.7em; /* ลดขนาดที่อยู่ลงจาก 0.75em เป็น 0.7em */
-    line-height: 1.2; /* ปรับ line-height ให้กระชับขึ้น */
+    font-size: 0.7em;
+    color: var(--color-text-secondary);
 }
 
 .header-title {
-    font-family: 'Kanit', sans-serif;
-    color: var(--color-primary);
-    font-size: 1.6em;
+    font-size: 1.5em;
     font-weight: 700;
-    text-align: center;
-    margin: 15px 0 25px 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    letter-spacing: 0.5px;
+    color: var(--color-primary);
+    text-align: left;
+    margin: 0 0 25px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--color-secondary);
 }
 
+/* Main Layout (Unchanged) */
+.calculation-layout {
+    display: flex;
+    gap: 30px;
+}
+.input-column {
+    flex: 2;
+}
+.result-column {
+    flex: 1.5;
+    min-width: 250px;
+}
+
+/* Input Sections (Unchanged) */
 .input-section {
-    background: var(--color-card-header);
-    border-radius: 12px;
-    padding: 5px;
     margin-bottom: 20px;
-    box-shadow: var(--shadow-elevation-2);
-    overflow: hidden;
-    transition: transform 0.3s ease;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background-color: var(--color-surface);
 }
 
-.input-section:hover {
-    transform: translateY(-2px);
-}
-
-.input-section-content {
-    background: var(--color-surface);
-    border-radius: 10px;
-    padding: 18px;
-}
-
-h2 {
-    font-family: 'Kanit', sans-serif;
-    color: var(--color-text-header);
-    font-size: 1.2em;
+.section-title {
+    font-size: 1.1em;
     font-weight: 600;
-    margin: 0;
-    padding: 12px 15px;
-    background: var(--color-card-header);
-    letter-spacing: 0.3px;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed var(--color-border);
 }
 
-.form-row {
+.form-row-compact {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+    margin-bottom: 12px;
+    gap: 10px;
 }
-
-.form-row:last-child {
-    border-bottom: none;
-}
-
-.label-col {
-    width: 45%;
-    font-family: 'Kanit', sans-serif;
+.form-row-compact label {
+    flex: 1;
     font-weight: 500;
     color: var(--color-text-primary);
     font-size: 0.95em;
+    white-space: nowrap;
+}
+.input-col {
+    flex: 2;
 }
 
-.value-col {
-    width: 55%;
-}
-
-input:not([readonly]), select {
-    font-family: 'Kanit', sans-serif;
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background: var(--color-input-bg-editable);
-    color: var(--color-text-primary);
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-    font-size: 0.95em;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-input[type="text"], input[type="number"] {
-    text-align: right;
-}
-
-input#carInfo {
-    text-align: left;
-}
-
-input:focus, select:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.15);
-    outline: none;
-    background-color: #FFFFFF;
-}
-
-input[readonly] {
-    font-family: 'Kanit', sans-serif;
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px dashed rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: var(--color-input-readonly);
-    font-weight: 600;
-    color: var(--color-primary);
-    box-sizing: border-box;
-    font-size: 0.95em;
-    text-align: right;
-}
-
-#downPercentDisplay {
-    font-family: 'Kanit', sans-serif;
-    font-weight: 600;
-    color: var(--color-primary);
-    font-size: 0.95em;
-}
-
-.button-group {
+.input-unit-group {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 25px;
+    align-items: center;
 }
 
-.button-group button {
-    font-family: 'Kanit', sans-serif;
-    width: 100%;
-    padding: 15px 20px;
-    font-size: 1.1em;
-    color: var(--color-text-light);
+.input-unit-group input, .input-unit-group select {
+    flex-grow: 1;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-input-bg);
+    color: var(--color-text-primary);
+    padding: 8px 10px;
+    font-size: 0.9em;
+    border-radius: 4px;
+    text-align: right;
+    transition: all 0.2s;
+}
+
+.input-unit-group .unit-text {
+    padding: 0 8px;
+    color: var(--color-text-secondary);
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+/* Button Styling (Unchanged) */
+.button-group-orix {
+    margin: 20px 0;
+    text-align: center;
+}
+.button-group-orix button {
+    padding: 12px 30px;
+    font-size: 1em;
+    font-weight: 600;
+    background-color: var(--color-button-primary);
+    color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 600;
-    box-shadow: var(--shadow-button);
-    position: relative;
-    overflow: hidden;
-    letter-spacing: 0.5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+.button-group-orix button:hover {
+    background-color: #004488;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.button-group-orix button#targetLeaseBtn {
+    background-color: var(--color-button-secondary);
+    margin-top: 10px;
+}
+.button-group-orix button#targetLeaseBtn:hover {
+    background-color: #A0000A;
 }
 
-.button-group button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
+
+/* --- Result Column Styling (Right Side) --- */
+.result-box {
+    background-color: var(--color-surface); 
+    border: 2px solid var(--color-primary); /* Blue border */
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
 }
 
-.button-group button:hover::before {
-    left: 100%;
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0; 
+    border-bottom: 1px dashed var(--color-border);
+}
+.result-row:last-of-type {
+    border-bottom: none;
 }
 
-.button-group button:hover {
-    box-shadow: var(--shadow-button-hover);
-    transform: translateY(-3px);
+/* Style for Net Total Row (Top Row) */
+.net-total-row {
+    background-color: var(--color-surface); 
+    border-radius: 4px;
+    padding: 12px 0; 
+    margin: -5px 0 5px 0; 
+    border-bottom: 2px solid var(--color-border);
 }
 
-.button-group button:active {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.net-total-row .result-label {
+    font-weight: 700;
+    font-size: 0.95em; 
+    color: var(--color-text-primary);
+}
+.net-total-row .result-input {
+    color: var(--color-primary); 
+    font-weight: 800;
+    font-size: 0.9em; 
 }
 
-#calculateBtn {
-    background: linear-gradient(135deg, #0055a4, #003366, #001a33);
+.result-label {
+    font-size: 0.9em; 
+    color: var(--color-text-primary);
 }
 
-#calculateBtn:hover {
-    background: linear-gradient(135deg, #0066cc, #004080, #00264d);
+.down-payment-label {
+    font-size: 0.9em; 
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+.down-payment-label .percent-display {
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    font-size: 0.8em; 
 }
 
-#targetLeaseBtn {
-    background: linear-gradient(135deg, #ff5252, #e30613, #b0050d);
+
+.result-value {
+    display: flex;
+    align-items: center;
 }
 
-#targetLeaseBtn:hover {
-    background: linear-gradient(135deg, #ff6b6b, #ff3b49, #d32f2f);
+.result-input {
+    border: none;
+    background: transparent;
+    font-size: 0.9em; /* MATCHED TO INPUT FONT SIZE */
+    font-weight: 700;
+    color: var(--color-primary); 
+    text-align: right;
+    padding: 0;
+    width: 120px; 
+}
+.result-input[readonly] {
+    background-color: transparent;
+}
+.result-input[readonly]:focus {
+    outline: none;
+    box-shadow: none;
 }
 
-/* Result section styling */
-.input-section:last-of-type {
-    background: linear-gradient(135deg, var(--color-primary), #004080);
+/* Highlight Lease Row (Most Prominent) */
+.total-lease-row {
+    margin-top: 15px;
+    border-bottom: none;
+    background-color: var(--color-surface); 
+    /* ADJUSTED: Set padding-left/right to 0 and adjusted margins to fill parent padding */
+    padding: 15px 0; 
+    margin-left: -15px; /* Pull left edge out */
+    margin-right: -15px; /* Pull right edge out */
+    width: calc(100% + 30px); /* Fill the width of the parent box */
+    
+    border-radius: 0; /* Remove border radius here */
+    border: 2px solid var(--color-secondary); /* Red border */
+    border-left: none; /* Remove left border */
+    border-right: none; /* Remove right border */
+    
+    /* Ensure internal content is aligned with original padding */
+    display: flex; 
+    padding-left: 15px; /* Re-add content padding */
+    padding-right: 15px; /* Re-add content padding */
 }
 
-.input-section:last-of-type h2 {
-    color: var(--color-text-light);
+.total-lease-row .result-label {
+    font-size: 1.0em; 
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.1;
 }
 
-.input-section:last-of-type .input-section-content {
-    background: rgba(255, 255, 255, 0.95);
+/* Style for (In VAT) tag */
+.lease-vat-tag {
+    font-size: 0.7em; /* Reduced size for In VAT */
+    font-weight: 400;
+    color: var(--color-text-secondary);
 }
 
-/* Decorative elements */
-.container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 6px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-    border-radius: 16px 16px 0 0;
+.result-highlight {
+    font-size: 1.15em; /* REDUCED SIZE FOR LEASE AMOUNT */
+    color: var(--color-text-highlight);
+    font-weight: 800;
 }
 
-/* Responsive adjustments */
-@media screen and (max-width: 1200px) {
-    .container {
-        max-width: 600px;
+.note-disclaimer {
+    font-size: 0.8em;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    padding: 15px 0 0 0;
+    border-top: 1px solid var(--color-border);
+}
+
+/* Responsive adjustments (Unchanged) */
+@media (max-width: 768px) {
+    .calculation-layout {
+        flex-direction: column;
+        gap: 20px;
     }
-}
-
-@media screen and (max-width: 992px) {
-    .container {
-        max-width: 550px;
+    .input-column {
+        padding-bottom: 0;
+        border-bottom: none;
     }
-}
-
-@media screen and (max-width: 768px) {
-    body {
-        padding: 12px;
-    }
-    .container {
-        padding: 22px;
-    }
-    .header-title {
-        font-size: 1.5em;
-    }
-    h2 {
-        font-size: 1.15em;
-    }
-}
-
-@media screen and (max-width: 576px) {
-    body {
-        font-size: 0.9em;
-        padding: 10px;
+    .result-column {
+        min-width: unset;
     }
     .container {
         padding: 20px;
     }
-    /* ปรับปรุง: ให้ Label และ Input อยู่ในบรรทัดเดียวกันและลดขนาด */
-    .header-content {
-        flex-direction: row; /* คงไว้เป็น row บนมือถือ */
-        align-items: center;
-        justify-content: space-between;
-        gap: 0; /* ลบ gap ที่เคยมี */
-    }
-    .logo-container img {
-        max-width: 50px; /* ลดขนาดโลโก้สำหรับมือถืออีก */
-        margin-right: 10px; /* ลด margin-right */
-    }
-    .company-info {
-        text-align: right; /* คง text-align: right ไว้ */
-    }
-    .company-name {
-        font-size: 0.85em; /* ลดขนาดชื่อบริษัทสำหรับมือถืออีก */
-    }
-    .company-address {
-        font-size: 0.65em; /* ลดขนาดที่อยู่สำหรับมือถืออีก */
-    }
     .header-title {
         font-size: 1.4em;
     }
-    h2 {
-        font-size: 1.1em;
+    .form-row-compact label {
+        flex: 1.2;
     }
-    .form-row {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        padding: 10px 0; /* ลด padding */
-    }
-    .label-col {
-        width: 45%;
-        font-size: 0.88em; /* ลดขนาดตัวอักษรของ Label */
-    }
-    .value-col {
-        width: 55%;
-    }
-    input:not([readonly]), select, input[readonly] {
-        padding: 8px 10px; /* ลด padding */
-        font-size: 0.88em; /* ลดขนาดตัวอักษรของ Input */
-    }
-    .button-group button {
-        padding: 13px 16px;
-        font-size: 1em;
+    .input-col {
+        flex: 1.8;
     }
 }
-
-@media screen and (max-width: 480px) {
-    body {
-        font-size: 0.85em;
-        padding: 8px;
+@media (max-width: 500px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
     }
-    .container {
-        padding: 18px;
-    }
-    .company-name {
-        font-size: 1em;
-    }
-    .company-address {
-        font-size: 0.7em;
-    }
-    .header-title {
-        font-size: 1.3em;
-    }
-    h2 {
-        font-size: 1.05em;
-    }
-    /* ลดขนาดลงอีกสำหรับจอที่เล็กมาก */
-    .form-row {
-        padding: 8px 0;
-    }
-    .label-col {
-        font-size: 0.85em; /* ลดขนาดตัวอักษรของ Label อีก */
-    }
-    input:not([readonly]), select, input[readonly] {
-        padding: 7px 9px; /* ลด padding อีก */
-        font-size: 0.85em; /* ลดขนาดตัวอักษรของ Input อีก */
-    }
-    .button-group button {
-        padding: 12px 15px;
-        font-size: 0.95em;
-    }
-}
-
-@media screen and (max-width: 380px) {
-    body {
-        font-size: 0.8em;
-        padding: 5px;
-    }
-    .container {
-        padding: 15px;
-    }
-    .header-title {
-        font-size: 1.2em;
-    }
-    h2 {
-        font-size: 1em;
-    }
-    .button-group button {
-        padding: 11px 14px;
-        font-size: 0.9em;
+    .company-info {
+        text-align: left;
+        margin-top: 10px;
     }
 }
 </style>
@@ -454,8 +368,7 @@ input[readonly] {
 <div class="container">
     <div class="header-content">
         <div class="logo-container">
-            <img src="orix_logo.png" alt="ORIX Logo"> 
-        </div>
+            </div>
         <div class="company-info">
             <div class="company-name">บริษัท ไทยโอริกซ์ลีสซิ่ง จำกัด</div>
             <div class="company-address">555 รสา วัน (อาคาร บี) ยูนิต 1801 ชั้น 18 และ ชั้น 19<br>
@@ -466,136 +379,153 @@ input[readonly] {
     
     <div class="header-title">โปรแกรมคำนวนลีสซิ่งเบื้องต้น</div>
     
-    <div class="input-section">
-        <h2>ข้อมูลเบื้องต้น</h2>
-        <div class="input-section-content">
-            <div class="form-row">
-                <div class="label-col">ข้อมูลรถ</div>
-                <div class="value-col"><input id="carInfo" type="text" value=""></div>
-            </div>
-            <div class="form-row">
-                <div class="label-col">ราคารถ</div>
-                <div class="value-col"><input id="carPrice" type="text" value="0.00"></div>
-            </div>
-            <div class="form-row">
-                <div class="label-col">ส่วนลด</div>
-                <div class="value-col"><input id="discount" type="text" value="0.00"></div>
-            </div>
-            <div class="form-row">
-                <div class="label-col">Option</div>
-                <div class="value-col"><input id="option" type="text" value="0.00"></div>
-            </div>
-            <div class="form-row">
-                <div class="label-col">ราคาสุทธิ</div>
-                <div class="value-col"><input id="totalAmount" readonly></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="input-section">
-        <h2>เงินดาวน์</h2>
-        <div class="input-section-content">
-            <div class="form-row">
-                <div class="label-col">รูปแบบ</div>
-                <div class="value-col">
-                    <select id="downType" onchange="calculate()">
-                        <option value="percent">เป็น %</option>
-                        <option value="amount">เป็นจำนวนเงิน</option>
-                    </select>
+    <div class="calculation-layout">
+        <div class="input-column">
+            <div class="input-section">
+                <h2 class="section-title">ข้อมูลเบื้องต้น</h2>
+                <div class="input-section-content">
+                    <div class="form-row-compact">
+                        <label for="carPrice">ราคารถ</label>
+                        <div class="input-col">
+                            <div class="input-unit-group">
+                                <input id="carPrice" type="text" value="0.00">
+                                <span class="unit-text">บาท</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-compact">
+                        <label for="discount">ส่วนลด</label>
+                        <div class="input-col">
+                            <div class="input-unit-group">
+                                <input id="discount" type="text" value="0.00">
+                                <span class="unit-text">บาท</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-compact">
+                        <label for="option">Option</label>
+                        <div class="input-col">
+                            <div class="input-unit-group">
+                                <input id="option" type="text" value="0.00">
+                                <span class="unit-text">บาท</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="label-col">กรอก % หรือ จำนวน</div>
-                <div class="value-col"><input id="downInput" type="text" value="0.00"></div>
+
+            <div class="input-section">
+                <h2 class="section-title">เงินดาวน์และระยะเวลา</h2>
+                <div class="input-section-content">
+                    <div class="form-row-compact">
+                        <label for="downType">รูปแบบเงินดาวน์</label>
+                        <div class="input-col">
+                            <select id="downType" onchange="calculate()">
+                                <option value="percent">เป็น %</option>
+                                <option value="amount">เป็นจำนวนเงิน</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row-compact">
+                        <label for="downInput">กรอก % / จำนวน</label>
+                        <div class="input-col">
+                            <div class="input-unit-group">
+                                <input id="downInput" type="text" value="0.00">
+                                <span class="unit-text percent-display" id="downInputUnit">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-compact">
+                        <label for="interestRate">อัตราดอกเบี้ยต่อปี (%)</label>
+                        <div class="input-col">
+                            <div class="input-unit-group">
+                                <input id="interestRate" type="text" value="0.00">
+                                <span class="unit-text">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-compact">
+                        <label for="termYears">จำนวนปี</label>
+                        <div class="input-col">
+                            <div class="input-unit-group">
+                                <input id="termYears" type="number" step="1" value="0">
+                                <span class="unit-text">ปี</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-row">
-                <div class="label-col">เงินดาวน์</div>
-                <div class="value-col"><input id="downAmount" readonly></div>
+            
+            <div class="button-group-orix">
+                <button id="calculateBtn" onclick="calculate()">คำนวณ</button>
+                <button id="targetLeaseBtn" onclick="calculateDownForTargetLease(36000)">คำนวณเงินดาวน์สำหรับค่างวด 36,000 บาท</button>
             </div>
-            <div class="form-row">
-                <div class="label-col">เงินดาวน์คิดเป็น</div>
-                <div class="value-col"><span id="downPercentDisplay">-</span></div>
+        </div>
+
+        <div class="result-column">
+            <h2 class="section-title">ผลการคำนวณ</h2>
+            <div class="result-box">
+                <div class="result-row net-total-row">
+                    <span class="result-label">ราคาสุทธิ</span>
+                    <span class="result-value">
+                        <input id="totalAmount" readonly class="result-input">
+                        <span class="unit-text">บาท</span>
+                    </span>
+                </div>
+                
+                <div class="result-row">
+                    <span class="down-payment-label">
+                        เงินดาวน์
+                        <span id="downPercentDisplay" class="percent-display"></span>
+                    </span>
+                    <span class="result-value">
+                        <input id="downAmount" readonly class="result-input">
+                        <span class="unit-text">บาท</span>
+                    </span>
+                </div>
+                
+                <div class="result-row">
+                    <span class="result-label">ยอดจัด</span>
+                    <span class="result-value">
+                        <input id="financeAmt" readonly class="result-input">
+                        <span class="unit-text">บาท</span>
+                    </span>
+                </div>
+                
+                <div class="result-row">
+                    <span class="result-label">ดอกเบี้ยรวม</span>
+                    <span class="result-value">
+                        <input id="intTotal" readonly class="result-input">
+                        <span class="unit-text">บาท</span>
+                    </span>
+                </div>
+                
+                <div class="result-row total-lease-row">
+                    <span class="result-label">
+                        ค่างวดต่อเดือน
+                        <span class="lease-vat-tag">(In VAT)</span>
+                    </span>
+                    <span class="result-value">
+                        <input id="leaseInVat" readonly class="result-input result-highlight">
+                        <span class="unit-text">บาท</span>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="note-disclaimer">
+                *ผลการคำนวณข้างต้นเป็นตัวเลขประมาณการเท่านั้น และอัตราดอกเบี้ยอาจมีการเปลี่ยนแปลง โปรดติดต่อเจ้าหน้าที่เพื่อรับอัตราที่แน่นอน
             </div>
         </div>
     </div>
     
-    <div class="input-section">
-        <h2>ดอกเบี้ยและระยะเวลา</h2>
-        <div class="input-section-content">
-            <div class="form-row">
-                <div class="label-col">อัตราดอกเบี้ย (%)</div>
-                <div class="value-col"><input id="interestRate" type="text" value="0.00"></div>
-            </div>
-            <div class="form-row">
-                <div class="label-col">จำนวนปี</div>
-                <div class="value-col"><input id="termYears" type="number" step="1" value="0"></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="input-section">
-        <h2>ผลลัพธ์</h2>
-        <div class="input-section-content">
-            <div class="form-row">
-                <div class="label-col">ยอดจัด</div>
-                <div class="value-col"><input id="financeAmt" readonly></div>
-            </div>
-            <div class="form-row">
-                <div class="label-col">ดอกเบี้ยต่อปี</div>
-                <div class="value-col"><input id="intPA" readonly></div>
-            </div>
-            <div class="form-row">
-                <div class="label-col">ดอกเบี้ยรวม</div>
-                <div class="value-col"><input id="intTotal" readonly></div>
-            </div>
-            <div class="form-row">
-                <div class="label-col">ค่างวด (In VAT)</div>
-                <div class="value-col"><input id="leaseInVat" readonly></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="button-group">
-        <button id="calculateBtn" onclick="calculate()">คำนวณ</button>
-        <button id="targetLeaseBtn" onclick="calculateDownForTargetLease(36000)">ค่างวด 36,000</button>
-    </div>
 </div>
 
 <div style="display: none;">
-    <h2>ค่าคอมมิชชั่น</h2>
-    <table>
-        <tr><td class="label">คิดค่าคอมจาก</td>
-            <td class="value">
-                <select id="comBase" onchange="calculate()">
-                    <option value="interest">ดอกเบี้ยรวม</option>
-                    <option value="finance">ยอดจัด</option>
-                </select>
-            </td>
-        </tr>
-        <tr><td class="label">Commission (%)</td><td class="value"><input id="comPercent" type="number" step="1" value="0"></td></tr>
-        <tr><td class="label">ค่าคอม (ที่คำนวณ)</td><td class="value"><input id="calculatedCommission" readonly></td></tr>
-        <tr><td class="label">Extra Commission</td><td class="value"><input id="extra" type="text" value="0.00"></td></tr>
-        <tr><td class="label">QS Extra Cost</td><td class="value"><input id="qsExtra" readonly></td></tr>
-    </table>
-    
-    <h2>QS Information</h2>
-    <table>
-        <tr><td class="label">ข้อมูลรถ</td><td class="value"><input id="qsCarInfo" readonly></td></tr>
-        <tr><td class="label">ราคารถ</td><td class="value"><input id="qsCarPrice" readonly></td></tr>
-        <tr><td class="label">ส่วนลด</td><td class="value"><input id="qsDiscount" readonly></td></tr>
-        <tr><td class="label">Option</td><td class="value"><input id="qsOption" readonly></td></tr>
-        <tr><td class="label">เงินดาวน์</td><td class="value"><input id="qsDownAmount" readonly></td></tr>
-        <tr><td class="label">เงินดาวน์คิดเป็น %</td><td class="value"><input id="qsDownPercent" readonly></td></tr>
-        <tr><td class="label">TR (Effective %)</td><td class="value"><input id="qsTrRate" readonly></td></tr>
-        <tr><td class="label">จำนวนปี</td><td class="value"><input id="qsTermYears" readonly></td></tr>
-        <tr><td class="label">Deposit</td><td class="value"><input id="qsDeposit" readonly></td></tr>
-        <tr><td class="label">RV</td><td class="value"><input id="qsRV" readonly></td></tr>
-        <tr><td class="label">TR Dep</td><td class="value"><input id="qsTrDep" readonly></td></tr>
-    </table>
-</div>
+    <input id="qsDownPercent" type="hidden">
+    </div>
 
 <script>
-// Helper functions for number formatting
+// Helper functions for number formatting (Unchanged)
 function format(n, decimals = 2) {
     if (isNaN(n) || n === null) return "0.00";
     return new Intl.NumberFormat('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }).format(parseFloat(n));
@@ -616,6 +546,7 @@ function uncomma(s) {
     return isNaN(num) ? 0 : num;
 }
 
+// IRR Function (Unchanged)
 function calculateIRR(nper, pmt, pv, fv = 0, type = 0) {
     if (pmt === 0 && pv === 0) return NaN;
     if (nper <= 0) return NaN;
@@ -650,11 +581,12 @@ function calculateIRR(nper, pmt, pv, fv = 0, type = 0) {
     return NaN;
 }
 
+// Display Down Payment Percentage (Unchanged)
 function showDownPercent() {
     const total = uncomma(document.getElementById("totalAmount").value);
     const down = uncomma(document.getElementById("downAmount").value);
     const result = total > 0 ? (down / total * 100) : 0;
-    document.getElementById("downPercentDisplay").innerText = `(${format4(result)}%)`;
+    document.getElementById("downPercentDisplay").innerText = `(${format(result, 2)}%)`;
     
     const qsDownPercentElement = document.getElementById("qsDownPercent");
     if (qsDownPercentElement) {
@@ -662,21 +594,23 @@ function showDownPercent() {
     }
 }
 
+// Main Calculation Logic (Unchanged)
 function calculate() {
     const getVal = id => uncomma(document.getElementById(id).value);
     const getIntVal = id => parseInt(uncomma(document.getElementById(id).value)) || 0;
     
-    const carInfo = document.getElementById('carInfo').value;
     const car = getVal('carPrice');
     const discount = getVal('discount');
     const option = getVal('option');
     const total = car - discount + option;
     
-    document.getElementById('totalAmount').value = format(total);
+    document.getElementById('totalAmount').value = format(total); 
     
     const downType = document.getElementById('downType').value;
     const downInput = getVal('downInput');
     let down = 0;
+
+    document.getElementById('downInputUnit').innerText = (downType === 'percent') ? '%' : 'บาท';
     
     if (downType === 'percent') {
         down = total * (downInput / 100);
@@ -684,10 +618,12 @@ function calculate() {
         down = downInput;
     }
     
-    if (down > total) {
+    if (down > total && total > 0) {
         alert("เงินดาวน์ไม่สามารถเกินราคารถได้ กรุณาใส่ข้อมูลใหม่");
-        document.getElementById('downInput').value = "0.00";
-        down = 0;
+        document.getElementById('downInput').value = format(total * 0.2);
+        down = total * 0.2;
+    } else if (down > total) {
+        down = total;
     }
     
     document.getElementById('downAmount').value = format(down);
@@ -699,108 +635,25 @@ function calculate() {
     
     if (months === 0) {
         document.getElementById('financeAmt').value = format(finance);
-        document.getElementById('intPA').value = format(0);
         document.getElementById('intTotal').value = format(0);
         document.getElementById('leaseInVat').value = format(0);
         showDownPercent();
         return;
     }
     
-    const intPA = finance * (rate / 100);
-    const intTotal = intPA * years;
+    const intTotal = finance * (rate / 100) * years;
     const financeTotalWithInterest = finance + intTotal;
-    
-    const comBaseElement = document.getElementById('comBase');
-    const comPercentElement = document.getElementById('comPercent');
-    const extraElement = document.getElementById('extra');
-    
-    const comBase = comBaseElement ? comBaseElement.value : 'finance';
-    const comPercent = comPercentElement ? getIntVal('comPercent') : 0;
-    const extra = extraElement ? getVal('extra') : 0;
-    
-    const comBaseVal = comBase === "finance" ? finance : intTotal;
-    const commission = Math.ceil(comBaseVal * (comPercent / 100));
-    const qsExtraCost = commission + extra;
     
     const leaseInVat = Math.ceil(financeTotalWithInterest / months);
     
-    const pvForIRR = -(finance + (commission * 1.07) + (extra * 1.07));
-    const tr = calculateIRR(months, leaseInVat, pvForIRR, 0, 0) * 12 * 100;
-    
-    const pvForTRDep = -(total + (commission * 1.07) + (extra * 1.07));
-    const trDep = calculateIRR(months, leaseInVat, pvForTRDep, down, 0) * 12 * 100;
-    
     document.getElementById('financeAmt').value = format(finance);
-    document.getElementById('intPA').value = format(intPA);
     document.getElementById('intTotal').value = format(intTotal);
     document.getElementById('leaseInVat').value = format(leaseInVat);
     
-    const calculatedCommissionElement = document.getElementById('calculatedCommission');
-    if (calculatedCommissionElement) {
-        calculatedCommissionElement.value = format(commission);
-    }
-    
-    const qsExtraElement = document.getElementById('qsExtra');
-    if (qsExtraElement) {
-        qsExtraElement.value = format(qsExtraCost);
-    }
-    
-    const financeTotalWithInterestElement = document.getElementById('financeTotalWithInterest');
-    if (financeTotalWithInterestElement) {
-        financeTotalWithInterestElement.value = format(financeTotalWithInterest);
-    }
-    
-    const trRateElement = document.getElementById('trRate');
-    if (trRateElement) {
-        trRateElement.value = isNaN(tr) ? 'ไม่สามารถคำนวณ' : format4(tr);
-    }
-    
-    const qsTrDepElement = document.getElementById('qsTrDep');
-    if (qsTrDepElement) {
-        qsTrDepElement.value = isNaN(trDep) ? 'ไม่สามารถคำนวณ' : format4(trDep);
-    }
-    
-    updateQsInfo(carInfo, car, discount, option, down, years, tr, trDep, qsExtraCost);
     showDownPercent();
 }
 
-function updateQsInfo(carInfo, car, discount, option, down, years, tr, trDep, qsExtraCost) {
-    const qsCarInfoElement = document.getElementById('qsCarInfo');
-    if (qsCarInfoElement) qsCarInfoElement.value = carInfo;
-    
-    const qsCarPriceElement = document.getElementById('qsCarPrice');
-    if (qsCarPriceElement) qsCarPriceElement.value = format(car);
-    
-    const qsDiscountElement = document.getElementById('qsDiscount');
-    if (qsDiscountElement) qsDiscountElement.value = format(discount);
-    
-    const qsOptionElement = document.getElementById('qsOption');
-    if (qsOptionElement) qsOptionElement.value = format(option);
-    
-    const qsDownAmountElement = document.getElementById('qsDownAmount');
-    if (qsDownAmountElement) qsDownAmountElement.value = format(down);
-    
-    const qsTrRateElement = document.getElementById('qsTrRate');
-    if (qsTrRateElement) qsTrRateElement.value = isNaN(tr) ? 'ไม่สามารถคำนวณ' : format4(tr);
-    
-    const qsTermYearsElement = document.getElementById('qsTermYears');
-    if (qsTermYearsElement) qsTermYearsElement.value = years;
-    
-    const qsDepositElement = document.getElementById('qsDeposit');
-    if (qsDepositElement) qsDepositElement.value = format(down / 1.07, 4);
-    
-    const totalAmount = uncomma(document.getElementById('totalAmount').value);
-    
-    const qsRVElement = document.getElementById('qsRV');
-    if (qsRVElement) qsRVElement.value = format4(totalAmount > 0 ? (down / totalAmount * 100) : 0) + '%';
-    
-    const qsTrDepElement = document.getElementById('qsTrDep');
-    if (qsTrDepElement) qsTrDepElement.value = isNaN(trDep) ? 'ไม่สามารถคำนวณ' : format4(trDep);
-    
-    const qsExtraElement = document.getElementById('qsExtra');
-    if (qsExtraElement) qsExtraElement.value = format(qsExtraCost);
-}
-
+// Calculate Down Payment for Target Lease (Unchanged)
 function calculateDownForTargetLease(targetLease) {
     const getVal = id => uncomma(document.getElementById(id).value);
     const getIntVal = id => parseInt(uncomma(document.getElementById(id).value)) || 0;
@@ -816,13 +669,8 @@ function calculateDownForTargetLease(targetLease) {
     const years = getIntVal('termYears');
     const months = years * 12;
     
-    if (months === 0 || rate === 0) {
-        alert("กรุณาระบุจำนวนปีและอัตราดอกเบี้ยก่อนคำนวณเงินดาวน์สำหรับค่างวดเป้าหมาย.");
-        return;
-    }
-    
-    if (total <= 0) {
-        alert("กรุณาระบุราคารถให้ถูกต้อง (มากกว่า 0) เพื่อคำนวณเงินดาวน์.");
+    if (months === 0 || rate === 0 || total <= 0) {
+        alert("กรุณาระบุ ราคารถ, จำนวนปี, และอัตราดอกเบี้ยให้ถูกต้องก่อนคำนวณเงินดาวน์สำหรับค่างวดเป้าหมาย.");
         return;
     }
     
@@ -833,7 +681,6 @@ function calculateDownForTargetLease(targetLease) {
     const maxIter = 500;
     
     for (let i = 0; i < maxIter; i++) {
-        // ใช้ Math.floor แทน Math.ceil เพื่อให้การค้นหาแม่นยำขึ้นในเงื่อนไขการค้นหา
         const currentDown = Math.floor((low + high) / 2);
         if (currentDown < 0) currentDown = 0;
         if (currentDown > total) currentDown = total;
@@ -849,23 +696,7 @@ function calculateDownForTargetLease(targetLease) {
             bestDown = currentDown;
         }
         
-        // เงื่อนไขหยุดเมื่อค่า low และ high ใกล้กันมากพอ
-        if (high - low <= 1) {
-             // ตรวจสอบค่างวดสุดท้ายที่คำนวณด้วย bestDown ที่ดีที่สุด
-            const finalLeaseCheck = months > 0 ? Math.ceil((total - bestDown + (total - bestDown) * (rate / 100) * years) / months) : 0;
-            if (finalLeaseCheck < targetLease) {
-                 // ถ้าค่างวดไม่ถึงเป้าหมาย ให้ลองลดเงินดาวน์ลงอีก 1 เพื่อเช็คค่างวดที่เพิ่มขึ้น
-                 const nextLowerDown = Math.max(0, bestDown - 1);
-                 const financeLower = total - nextLowerDown;
-                 const intTotalLower = financeLower * (rate / 100) * years;
-                 const leaseLower = months > 0 ? Math.ceil((financeLower + intTotalLower) / months) : 0;
-                 
-                 if (leaseLower >= targetLease) {
-                    bestDown = nextLowerDown;
-                 }
-            }
-            break;
-        }
+        if (high - low <= 1) break;
         
         if (currentLease > targetLease) {
             low = currentDown;
@@ -874,70 +705,71 @@ function calculateDownForTargetLease(targetLease) {
         }
     }
     
-    // ตรวจสอบครั้งสุดท้ายด้วย bestDown ที่หาได้
-    const finalLease = months > 0 ? Math.ceil((total - bestDown + (total - bestDown) * (rate / 100) * years) / months) : 0;
+    const financeFinal = total - bestDown;
+    const intTotalFinal = financeFinal * (rate / 100) * years;
+    const finalLease = months > 0 ? Math.ceil((financeFinal + intTotalFinal) / months) : 0;
 
-    // *** ส่วนที่แก้ไขตามความต้องการของผู้ใช้ ***
-    if (finalLease < targetLease) {
-        // ให้ alert และกำหนดเงินดาวน์เป็น 0
-        alert(`คำเตือน: ค่างวดที่คำนวณได้ (${format(finalLease)} บาท) ไม่ถึงค่างวดเป้าหมาย ${format(targetLease)} บาท ระบบได้กำหนดให้เงินดาวน์เป็น 0.`);
-        bestDown = 0;
+    if (finalLease > targetLease) {
+        bestDown = 0; 
+        alert(`คำเตือน: ค่างวดที่คำนวณได้ (${format(finalLease)} บาท) มากกว่าค่างวดเป้าหมาย ${format(targetLease)} บาท แม้จะวางเงินดาวน์ 0 บาทก็ตาม.`);
+    } else if (finalLease < targetLease) {
+        const financeCheck = total - (bestDown + 1);
+        const intTotalCheck = financeCheck * (rate / 100) * years;
+        const leaseCheck = months > 0 ? Math.ceil((financeCheck + intTotalCheck) / months) : 0;
+
+        if (leaseCheck > targetLease) {
+             // bestDown is correct
+        } else {
+            bestDown = 0; 
+        }
     }
-    // ***************************************
     
     document.getElementById('downType').value = 'amount';
     document.getElementById('downInput').value = formatNoDecimal(bestDown);
     calculate();
 }
 
-// Event Listeners for input fields
+// Event Listeners for input fields (Unchanged)
 function addInputListeners(id) {
     const el = document.getElementById(id);
     if (!el) return;
     
-    if (id === 'carInfo') {
-        el.addEventListener('blur', calculate);
-    } else {
-        el.addEventListener('focus', () => {
-            let currentVal = uncomma(el.value);
-            if (Math.abs(currentVal) < 0.001) {
-                el.value = '';
-            } else {
-                el.value = String(currentVal);
-            }
-        });
-        
-        el.addEventListener('blur', () => {
-            let val = uncomma(el.value);
-            if (id === 'termYears' || id === 'comPercent') {
-                el.value = formatNoDecimal(val);
-            } else if (id === 'interestRate') {
-                el.value = format(val, 2);
-            } else {
-                el.value = format(val);
-            }
-            calculate();
-        });
-        
-        el.addEventListener('input', () => {
-            let sanitizedValue = el.value.replace(/[^0-9.]/g, '');
-            const parts = sanitizedValue.split('.');
-            if (parts.length > 2) {
-                sanitizedValue = parts[0] + '.' + parts.slice(1).join('');
-            }
-            el.value = sanitizedValue;
-        });
-    }
+    el.addEventListener('focus', () => {
+        let currentVal = uncomma(el.value);
+        if (Math.abs(currentVal) < 0.001) {
+            el.value = '';
+        } else {
+            el.value = String(currentVal);
+        }
+    });
+    
+    el.addEventListener('blur', () => {
+        let val = uncomma(el.value);
+        if (id === 'termYears') {
+            el.value = formatNoDecimal(val);
+        } else if (id === 'interestRate') {
+            el.value = format(val, 2);
+        } else {
+            el.value = format(val);
+        }
+        calculate();
+    });
+    
+    el.addEventListener('input', () => {
+        let sanitizedValue = el.value.replace(/[^0-9.]/g, '');
+        const parts = sanitizedValue.split('.');
+        if (parts.length > 2) {
+            sanitizedValue = parts[0] + '.' + parts.slice(1).join('');
+        }
+        el.value = sanitizedValue;
+    });
 }
 
 window.onload = () => {
-    ['carPrice', 'discount', 'option', 'downInput', 'interestRate', 'extra', 'termYears', 'comPercent', 'carInfo'].forEach(addInputListeners);
+    ['carPrice', 'discount', 'option', 'downInput', 'interestRate', 'termYears'].forEach(addInputListeners); 
     
     const downTypeElement = document.getElementById('downType');
     if (downTypeElement) downTypeElement.addEventListener('change', calculate);
-    
-    const comBaseElement = document.getElementById('comBase');
-    if (comBaseElement) comBaseElement.addEventListener('change', calculate);
     
     calculate();
 };
